@@ -1,0 +1,73 @@
+<?php
+/**
+ * Copyright © 2021 magerubik.com. All rights reserved. 
+ * @author Magerubik Team <info@magerubik.com> 
+ * @package Magerubik_Productslider
+ */
+
+/**
+ * @var \Magerubik\Productslider\Block\IndexBlock $block
+ * @var \Magerubik\Productslider\Model\Productslider $sliderlist
+ * @var \Magerubik\Productslider\Model\Productslider $item
+ */
+use Magento\Framework\App\Action\Action;
+$_helper = $this->helper('Magento\Catalog\Helper\Output');
+$sliderlist = $block->getList();
+$idBlock = uniqid();
+$processed = [];
+
+echo "<pre>";
+    var_dump($sliderlist->toArray());
+echo "</pre>";
+?>
+<div id="tab-container-<?=$idBlock?>" class="productslider tabslide">
+    <ul class='list-tab'>
+        <?php
+        $prefixStr = '#productslider';
+        foreach ($sliderlist as $item)
+        {
+            $hrefurl = $prefixStr . $item->getId();
+            $title = $item->getTitle();
+            ?>
+            <li class='tab'><a href="<?=$hrefurl?>"><?=$title?></a></li>
+            <?php
+        }
+        ?>
+
+    </ul>
+    <?php
+    foreach ($sliderlist as $item) {
+        $hrefurl = $prefixStr . $item->getId();
+        $tabdivid = str_replace('#','',$hrefurl);
+        $owldivid = str_replace('#','owl-',$hrefurl);
+        ?>
+        <div id="<?=$tabdivid?>" class="mst-content-tab">
+            <?php
+            $dataSlider = $block->getItemByType($item->getCategoryId(),$item->getTypeId());
+            //
+            // OWL
+            //
+            if(count($dataSlider)>0){
+			foreach ($dataSlider as $_product) {
+
+                $productSets = $block->isElementOfSet($_product->getId());
+                if($productSets)
+                {
+                    if(array_key_exists($productSets[0],$processed))
+                    {
+                        continue;
+                    }
+                    $processed[$productSets[0]] = 1;
+                    $_product = $block->getProductDetail($productSets[0]);
+                }
+                echo "<pre>";
+                var_dump($_product->toArray());
+                echo "</pre>";
+            }
+			}else{ echo "test"; }
+            ?>
+        </div>
+        <?php
+    }
+    ?>
+</div>

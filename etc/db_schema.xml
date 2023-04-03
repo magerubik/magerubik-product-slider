@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+	<table name="magerubik_productslider_category" resource="default" engine="innodb" comment="Magerubik Productslider Group Slider Table">
+        <column xsi:type="int" name="category_id" padding="5" unsigned="true" nullable="false" identity="true" comment="Slider Group ID"/>
+        <column xsi:type="varchar" name="title" nullable="false" length="255" comment="Slider Group Title"/>
+		<column xsi:type="smallint" name="layout" padding="5" unsigned="true" nullable="false" default="1" comment="Layout ID"/>
+		<column xsi:type="mediumtext" name="info" nullable="true" comment="Infomation"/>
+		<column xsi:type="smallint" name="status" nullable="false" default="0" comment="Infomation"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="category_id"/>
+        </constraint>
+		<index referenceId="MAGERUBIK_PRODUCTSILER_CATEGORY_TITLE" indexType="btree">
+            <column name="title"/>
+        </index>
+		<index referenceId="MAGERUBIK_PRODUCTSILER_CATEGORY_LAYOUT" indexType="btree">
+            <column name="layout"/>
+        </index>
+		<index referenceId="MAGERUBIK_PRODUCTSILER_CATEGORY_STATUS" indexType="btree">
+            <column name="status"/>
+        </index>
+    </table>
+	<table name="magerubik_productslider_slider" resource="default" engine="innodb" comment="Magerubik Productslider Slider Table">
+        <column xsi:type="int" name="productslider_id" padding="5" unsigned="true" nullable="false" identity="true" comment="Slider ID"/>
+        <column xsi:type="varchar" name="title" nullable="false" length="255" default="" comment="Slider Title"/>
+        <column xsi:type="mediumtext" name="description" nullable="true" comment="Slider Description"/>
+        <column xsi:type="smallint" name="category_id" nullable="true" comment="Category ID"/>
+        <column xsi:type="smallint" name="type_id" nullable="true" comment="Type ID"/>
+        <column xsi:type="smallint" name="group_id" nullable="true" comment="Group ID"/>
+        <column xsi:type="smallint" name="position" nullable="false" default="0" comment="Slider Position"/>
+        <column xsi:type="smallint" name="status" nullable="false" default="0" comment="Status"/>
+        <column xsi:type="timestamp" name="created_time" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Slider Creation Time"/>
+		<column xsi:type="timestamp" name="update_time" on_update="true" nullable="false" default="CURRENT_TIMESTAMP" comment="Slider Modification Time"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="productslider_id"/>
+        </constraint>
+		<index referenceId="MAGERUBIK_PRODUCTSILER_SLIDER_TITLE" indexType="btree">
+            <column name="title"/>
+        </index>
+		<index referenceId="MAGERUBIK_PRODUCTSILER_SLIDER_CATEGORY_ID" indexType="btree">
+            <column name="category_id"/>
+        </index>
+		<index referenceId="MAGERUBIK_PRODUCTSILER_SLIDER_TYPE_ID" indexType="btree">
+            <column name="type_id"/>
+        </index>
+		<index referenceId="MAGERUBIK_PRODUCTSILER_SLIDER_GROUP_ID" indexType="btree">
+            <column name="group_id"/>
+        </index>
+		<index referenceId="MAGERUBIK_PRODUCTSILER_SLIDER_STATUS" indexType="btree">
+            <column name="status"/>
+        </index>
+    </table>
+</schema>

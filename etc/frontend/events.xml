@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © 2021 magerubik.com. All rights reserved. 
+ * @author Magerubik Team <info@magerubik.com> 
+ * @package Magerubik_Productslider
+ */
+-->
+<config xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:noNamespaceSchemaLocation='urn:magento:framework:Event/etc/events.xsd'>
+    <event name='layout_generate_blocks_after'>
+        <observer
+                name='Magerubik\Productslider\Observer\LayoutGenerateBlockBefore'
+                instance='Magerubik\Productslider\Observer\LayoutGenerateBlockBefore'
+        />
+    </event>
+</config>

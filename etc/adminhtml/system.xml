@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © 2021 magerubik.com. All rights reserved. 
+ * @author Magerubik Team <info@magerubik.com> 
+ * @package Magerubik_Productslider
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="magerubik_productslider" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+			<label>Product Slider</label>
+            <tab>magerubik</tab>
+            <resource>Magerubik_Productslider::config</resource>
+            <group id="setting" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0"
+                   showInStore="0">
+                <label>Psilder Configs</label>
+                <field id="enable" translate="label comment" type="select" sortOrder="1" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Enable Module</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>
+                        Yes to enable Product Slider Pro Module.
+                    </comment>
+                </field>
+                <field id="maxproduct" translate="label comment" type="text" sortOrder="3" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Maximum Product</label>
+                    <comment>
+                        Define maximum product will be display in slider. Leave empty will be default : 12
+                    </comment>
+                </field>
+                <field id="slideritem" translate="label comment" type="text" sortOrder="4" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Slider items</label>
+                    <comment>
+                        Define how many product will display in each slider page with the widest browser width. Default : 6
+                    </comment>
+                </field>
+                <field id="showprice" translate="label comment" type="select" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Show Price</label>
+                    <comment>Show product's price in on each items</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="showaddcart" translate="label comment" type="select" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Show Add Cart</label>
+                    <comment>Show product's add to cart button in on each items</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="showreviews" translate="label comment" type="select" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Show Reviews</label>
+                    <comment>Show product's reviews in on each items</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="autoplay" translate="label comment" type="select" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Slider Autoplay</label>
+                    <comment>Yes to animate slider automatically</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="autotimeout" translate="label comment" type="text" sortOrder="9" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Autoplay timeout</label>
+                    <comment>
+                        Change to any interger to make slider play every (input value) miliseconds. Default : 5000 (equals 5 secs).
+                    </comment>
+                </field>
+                <!-- Radio convert -->
+                <field id="navigation" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Navigation / Pagination</label>
+                    <comment>1 to display "next" and "prev" buttons.2 to display dots pagination. Other value will be 0 : disable nav/pagi. Default : 1</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="stoponhover" translate="label comment" type="select" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Stop on hover</label>
+                    <comment>Yes to stop slider animation when cusor hover.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="sliderspeed" translate="label comment" type="text" sortOrder="12" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Slider Speed</label>
+                    <comment>Define the speed for slider (in miliseconds). Default : 250</comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

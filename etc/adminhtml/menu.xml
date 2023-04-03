@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © 2021 magerubik.com. All rights reserved. 
+ * @author Magerubik Team <info@magerubik.com> 
+ * @package Magerubik_Productslider
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <update id="Magerubik_All::menu" title="Magerubik" module="Magerubik_Productslider" sortOrder="15" resource="Magerubik_All::menu"/>
+		<add id="Magerubik_Productslider::elements" title="Product Slider Pro" module="Magerubik_Productslider" parent="Magerubik_All::menu" sortOrder="15" resource="Magerubik_Productslider::elements" />
+        <add id="Magerubik_Productslider::slider" title="Manage Item" module="Magerubik_Productslider" sortOrder="0" parent="Magerubik_Productslider::elements" action="productslider/slider" resource="Magerubik_Productslider::slider"/>
+        <add id="Magerubik_Productslider::category" title="Manage Group" module="Magerubik_Productslider" sortOrder="1" parent="Magerubik_Productslider::elements" action="productslider/category" resource="Magerubik_Productslider::category"/>
+        <add id="Magerubik_Productslider::config" title="Setting" module="Magerubik_Productslider" sortOrder="1" parent="Magerubik_Productslider::elements" action="adminhtml/system_config/edit/section/magerubik_productslider" resource="Magerubik_Productslider::config"/>
+    </menu>
+</config>

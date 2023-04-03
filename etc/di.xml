@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!-- /**
+ * Copyright © 2021 magerubik.com. All rights reserved. 
+ * @author Magerubik Team <info@magerubik.com> 
+ * @package Magerubik_Productslider
+ */ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">        
+	<preference for="Magerubik\Productslider\Api\CategoryRepositoryInterface" type="Magerubik\Productslider\Model\Repository\CategoryRepository" />
+	<preference for="Magerubik\Productslider\Api\Data\CategoryInterface" type="Magerubik\Productslider\Model\Category" />
+	<preference for="Magerubik\Productslider\Api\SliderRepositoryInterface" type="Magerubik\Productslider\Model\Repository\SliderRepository" />
+	<preference for="Magerubik\Productslider\Api\Data\SliderInterface" type="Magerubik\Productslider\Model\Slider" />
+	<type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="mrproductslider_category_listing_data_source" xsi:type="string">Magerubik\Productslider\Model\ResourceModel\Category\Grid\Collection</item>
+                <item name="mrproductslider_slider_listing_data_source" xsi:type="string">Magerubik\Productslider\Model\ResourceModel\Slider\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

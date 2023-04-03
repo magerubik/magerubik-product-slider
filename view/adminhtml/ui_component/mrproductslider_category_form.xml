@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © 2021 magerubik.com. All rights reserved.
+ * @author Magerubik Team <info@magerubik.com>
+ * @package Magerubik_Productslider
+ */
+-->
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">mrproductslider_category_form.mrproductslider_category_form_data_source</item>
+            <item name="deps" xsi:type="string">mrproductslider_category_form.mrproductslider_category_form_data_source</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">Group</item>
+        <item name="config" xsi:type="array">
+            <item name="dataScope" xsi:type="string">data</item>
+            <item name="namespace" xsi:type="string">mrproductslider_category_form</item>
+        </item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+        <item name="buttons" xsi:type="array">
+			<item name="back" xsi:type="string">Magerubik\All\Block\Adminhtml\Button\Edit\Back</item>
+            <item name="reset" xsi:type="string">Magerubik\All\Block\Adminhtml\Button\Edit\Reset</item>
+            <item name="save" xsi:type="string">Magerubik\All\Block\Adminhtml\Button\Edit\Save</item>
+            <item name="save_and_continue" xsi:type="string">Magerubik\All\Block\Adminhtml\Button\Edit\SaveAndContinue</item>
+            <item name="delete" xsi:type="string">Magerubik\All\Block\Adminhtml\Button\Edit\Delete</item>
+        </item>
+    </argument>
+    <dataSource name="mrproductslider_category_form_data_source">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">Magerubik\Productslider\Model\DataProvider\CategoryDataProvider</argument>
+            <argument name="name" xsi:type="string">mrproductslider_category_form_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">category_id</argument>
+            <argument name="requestFieldName" xsi:type="string">id</argument>
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="submit_url" xsi:type="url" path="*/category/save"/>
+                </item>
+            </argument>
+        </argument>
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+    </dataSource>
+    <fieldset name="general">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="label" xsi:type="string" translate="true">General</item>
+                <item name="collapsible" xsi:type="boolean">true</item>
+                <item name="opened" xsi:type="boolean">true</item>
+            </item>
+        </argument>
+        <field name="category_id">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="dataScope" xsi:type="string">category_id</item>
+                    <item name="source" xsi:type="string">mrproductslider_category</item>
+                </item>
+            </argument>
+        </field>
+        <field name="title">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Title</item>
+                    <item name="visible" xsi:type="boolean">true</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="dataScope" xsi:type="string">title</item>
+                    <item name="source" xsi:type="string">mrproductslider_category</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+		<field name="layout">
+			<argument name="data" xsi:type="array">
+				<item name="options" xsi:type="object">Magerubik\Productslider\Model\Source\Layout</item>
+				<item name="config" xsi:type="array">
+					<item name="filter" xsi:type="string">select</item>
+					<item name="component" xsi:type="string">Magento_Ui/js/form/element/select</item>
+					<item name="dataType" xsi:type="string">text</item>
+					<item name="source" xsi:type="string">mrproductslider_category</item>
+					<item name="formElement" xsi:type="string">select</item>
+					<item name="label" xsi:type="string" translate="true">Layout</item>
+				</item>
+			</argument>
+        </field>
+		<field name="status">
+			<argument name="data" xsi:type="array">
+				<item name="options" xsi:type="object">Magerubik\All\Model\Source\Status</item>
+				<item name="config" xsi:type="array">
+					<item name="filter" xsi:type="string">select</item>
+					<item name="component" xsi:type="string">Magento_Ui/js/form/element/select</item>
+					<item name="dataType" xsi:type="string">text</item>
+					<item name="source" xsi:type="string">mrproductslider_category</item>
+					<item name="formElement" xsi:type="string">select</item>
+					<item name="label" xsi:type="string" translate="true">Status</item>
+				</item>
+			</argument>
+        </field>
+		<field name="info">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="label" xsi:type="string" translate="true">How to Embed ?</item>
+					<item name="additionalClasses" xsi:type="string">hkk-texinfo</item>
+					<item name="visible" xsi:type="boolean">true</item>
+					<item name="dataType" xsi:type="string">text</item>
+					<item name="formElement" xsi:type="string">textarea</item>
+					<item name="source" xsi:type="string">mrproductslider_category</item>
+					<item name="dataScope" xsi:type="string">info</item>
+					<item name="disabled" xsi:type="boolean">true</item>
+					<item name="rows" xsi:type="number">15</item>
+					<item name="default" xsi:type="string">Click [ Save and Continue Edit ] to see Instruction.</item>
+				</item>
+			</argument>
+		</field>
+    </fieldset>
+</form>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © 2021 magerubik.com. All rights reserved. 
+ * @author Magerubik Team <info@magerubik.com> 
+ * @package Magerubik_Productslider
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <magerubik_productslider>
+            <setting>
+                <enable>1</enable>
+                <maxproduct>12</maxproduct>
+                <slideritem>6</slideritem>
+                <showprice>1</showprice>
+                <showaddcart>1</showaddcart>
+                <showreviews>1</showreviews>
+                <autoplay>1</autoplay>
+                <autotimeout>5000</autotimeout>
+                <navigation>1</navigation>
+                <stoponhover>0</stoponhover>
+                <sliderspeed>250</sliderspeed>
+            </setting>
+        </magerubik_productslider>
+    </default>
+</config>
