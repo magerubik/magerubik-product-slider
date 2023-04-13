@@ -16,154 +16,45 @@ $idBlock = uniqid();
 	<ul class='list-tab-vertcal'>	
 		<?php
 		$prefixStr = '#productslider';
-		$i=1;
 		foreach ($sliderlist as $item)
 		{
 			$hrefurl = $prefixStr . $item->getId();
 			$title = $item->getTitle();
 			?>
-			<li class='tab<?php if($i==1):?> active loaded<?php endif; ?>'  data-cat='<?php echo $item->getCategoryId(); ?>' data-type='<?php echo $item->getTypeId(); ?>' data-active="<?=$item->getId()?>"><span><?=$title?></span></li>
-			<?php if($i==1): $itemAc = $item; endif; ?>
-		<?php $i++; } ?>
+			<li class='tab'  data-cat='<?php echo $item->getCategoryId(); ?>' data-type='<?php echo $item->getTypeId(); ?>' data-active="<?=$item->getId()?>"><span><?=$title?></span></li>
+		<?php } ?>
 	</ul>
 	<div class="tab-vertcal-content">
 		<div class="double-bounce-spinner ajax_loading_<?php echo $idBlock?>" style="display:none" data-url="<?php echo $this->getUrl('productslider/index/ajax')?>">
 			<div class="double-bounce1"></div>
 			<div class="double-bounce2"></div>
 		</div>
-	<?php
-        $processed = [];
-        $hrefurl = $prefixStr . $itemAc->getId();
-        $tabdivid = str_replace('#','',$hrefurl);
-        $owldivid = str_replace('#','owl-',$hrefurl);
-        ?>
-        <?php $dataSlider = $block->getItemByType($itemAc->getCategoryId(),$itemAc->getTypeId()); ?>		
-		<div id="<?=$tabdivid?>" class="mst-content-tab active">
-            <?php if(count($dataSlider)>0){ ?>
-			<div id="<?=$owldivid?>" class="owl-carousel style-default">
-                <?php foreach($dataSlider as $_product){ ?>
-                    <div class="item">
-						<div class="abs-img">
-							<a href="<?php echo $_product->getProductUrl() ?>"
-							   title="<?php echo $block->stripTags($block->getImageLabel($_product, 'small_image'), null, true) ?>"
-							   class="product-image" >
-								<?php echo $block->absblock->getImage($_product,'category_page_grid')->toHtml(); ?>
-							</a>							
-							<div data-role="add-to-links" class="abs-left list-icon">
-								<?php if ($this->helper('Magento\Wishlist\Helper\Data')->isAllow()): ?>
-									<a href="#"
-										class="action towishlist"
-										title="<?php echo $block->escapeHtml(__('Add to Wish List')); ?>"
-										aria-label="<?php echo $block->escapeHtml(__('Add to Wish List')); ?>"
-										data-post='<?php /* @escapeNotVerified */ echo $block->absblock->getAddToWishlistParams($_product); ?>'
-										data-action="add-to-wishlist"
-										role="button">
-										<i class="far fa-heart"></i>
-									</a>
-								<?php endif; ?>
-								<?php
-									/**
-									 * @var Magento\Catalog\Helper\Product\Compare $compareHelper
-									 */
-									$compareHelper = $this->helper('Magento\Catalog\Helper\Product\Compare');
-								?>
-								<a href="#"
-									class="action tocompare"
-									title="<?php echo $block->escapeHtml(__('Add to Compare')); ?>"
-									aria-label="<?php echo $block->escapeHtml(__('Add to Compare')); ?>"
-									data-post='<?php /* @escapeNotVerified */ echo $compareHelper->getPostDataParams($_product); ?>'
-									role="button">
-									<i class="far fa-chart-bar"></i>
-								</a>
-							</div>
-						</div>
-						<div class="product-des">
-                            <strong class="product name product-item-name">
-								<a class="product-item-link" href="<?php echo $_product->getProductUrl() ?>"
-									title="<?php echo $block->stripTags($_product->getName(), null, true) ?>">
-									<?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?>
-								</a>
-							</strong>
-                            <?php if($block->tempSetting->showreviews)	echo( $block->absblock->getReviewsSummaryHtml($_product,'short')); ?>
-                            <?php if($block->tempSetting->showprice) echo $block->absblock->getProductPrice($_product) ?>
-							<?php if ( $block->tempSetting->showaddcart )  { ?>
-								<div class="actions-primary">
-									<?php if($_product->isSaleable()): ?>
-										<?php $postParams = $block->absblock->getAddToCartPostParams($_product); ?>
-										<form data-role="tocart-form" action="<?php /* @escapeNotVerified */ echo $postParams['action']; ?>" method="post">
-											<input type="hidden" name="product" value="<?php /* @escapeNotVerified */ echo $postParams['data']['product']; ?>">
-											<input type="hidden" name="<?php /* @escapeNotVerified */ echo Action::PARAM_NAME_URL_ENCODED; ?>" value="<?php /* @escapeNotVerified */ echo $postParams['data'][Action::PARAM_NAME_URL_ENCODED]; ?>">
-											<?php echo $block->absblock->getBlockHtml('formkey')?>
-											<button type="submit"
-													title="<?php echo $block->absblock->escapeHtml(__('Add to Cart')); ?>"
-													class="action tocart primary">
-												<span><?php /* @escapeNotVerified */ echo __('Add to Cart') ?></span>
-											</button>
-										</form>
-									<?php else: ?>
-										<p class="availability out-of-stock"><span><?php echo __('Out of stock') ?></span></p>
-									<?php endif; ?>
-								</div>
-							<?php } ?>
-                        </div>
-                    </div>
-                    <?php
-                }?>
-            </div>
-            <script type="text/javascript">
-                require(["jquery","mr_owlslider"], function($){
-                    $('#<?=$owldivid?>').owlCarousel({
-                        autoplay: <?=$block->_configHelper->getAutoplay()?>,
-                        autoplayTimeout: <?=$block->_configHelper->getAutotimeout()?>,
-						stopOnHover: <?=$block->_configHelper->getAutoplay()?>,
-						slideSpeed:  <?=$block->_configHelper->getSliderSpeed()?>,						
-						//loop:true,
-						responsiveClass:true,
-						responsive:{
-							0:{
-								margin:10,
-								items:1
-								
-							},
-							375:{
-								margin:10,
-								items:2
-							},
-							600:{
-								margin:10,
-								items:3
-							},
-							768:{
-								margin:10,
-								items:2
-							},
-							992:{
-								margin:10,
-								items:3
-							},
-							1200:{
-								margin:20,
-								items:<?=$block->_configHelper->getSliderItem()-1; ?>
-							}
-						}
-                    });					
-                });
-            </script>
-			<script type="text/x-magento-init">
-				{
-					"[data-role=tocart-form], .form.map.checkout": {
-						"catalogAddToCart": {
-							"product_sku": "<?= $escaper->escapeJs($_product->getSku()) ?>"
-						}
-					}
-				}
-			</script>
-			<?php }else { echo __('We can\'t find products matching the selection.'); } ?>
-        </div>
 	</div>
 </div>
+<form data-role="tocart-form" method="post" style="display:none;"></form>
+<script type="text/x-magento-init">
+	{
+		"[data-role=tocart-form], .form.map.checkout": {
+			"catalogAddToCart": {
+				}
+			}
+	}
+</script>
 <script type="text/javascript">
     require(["jquery"], function($){
+		function firstVertcalTabAjax() {
+			var el = $('#tab-container-<?php echo $idBlock?> .list-tab-vertcal .tab').first();
+			var type =el.attr('data-type');
+			var catId =el.attr('data-cat');
+			var tabId =el.attr('data-active');
+			el.addClass('active');
+			sendAjax(type, catId, tabId);
+			el.addClass('loaded');
+			var contentActive = '#productslider' + el.attr('data-active');
+			$('#tab-container-<?php echo $idBlock?> .mst-content-tab').removeClass('active');
+			$('#tab-container-<?php echo $idBlock?> .tab-vertcal-content').find(contentActive).addClass('active');
+		}
+		firstVertcalTabAjax();
 		$('#tab-container-<?php echo $idBlock?> .list-tab-vertcal .tab').click(function() {			
 			if($(this).hasClass('active')) return;
 			$('#tab-container-<?php echo $idBlock?> .list-tab-vertcal .tab').removeClass('active');

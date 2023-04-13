@@ -48,6 +48,8 @@ class Ajax  extends \Magento\Catalog\Block\Product\AbstractProduct
 		\Magerubik\Productslider\Helper\ConfigHelper $configHelper,
 		\Magento\Catalog\Model\CategoryFactory $categoryFactory,
 		ListProduct $abstractProduct,
+		\Magento\ConfigurableProduct\Model\Product\Type\Configurable $configurable,
+		\Magento\GroupedProduct\Model\Product\Type\Grouped $grouped,
 		\Magento\Framework\Data\Form\FormKey $formKey,
         array $data = []
     ) {
@@ -59,8 +61,24 @@ class Ajax  extends \Magento\Catalog\Block\Product\AbstractProduct
 		$this->_configHelper = $configHelper;
 		$this->tempSetting = $this->_configHelper->getTemplateSettings();
 		$this->absblock = $abstractProduct;
+		$this->configurable = $configurable;
+		$this->grouped = $grouped;
 		$this->formKey = $formKey;
         parent::__construct( $context, $data );
+    }
+	public function getParentId($childId){
+		/* for simple product of configurable product */
+        $product = $this->configurable->getParentIdsByChild($childId);
+        if(isset($product[0])){
+         return $product[0];
+       }
+ 
+		/* for simple product of Group product */
+       $parentIds = $this->grouped->getParentIdsByChild($childId);
+	   if(isset($parentIds[0])){
+         return $parentIds[0];
+       }
+       return false;
     }
 	public function getFormKey()
 	{
@@ -260,10 +278,15 @@ class Ajax  extends \Magento\Catalog\Block\Product\AbstractProduct
     }
 	public function getBestSellerProducts($categoryID = null)
     {
-        $collection = $this->_objectManager->get('\Magento\Sales\Model\ResourceModel\Report\Bestsellers\CollectionFactory')->create()->setModel('Magento\Catalog\Model\Product');
+        $collection = $this->_objectManager->get('\Magento\Sales\Model\ResourceModel\Report\Bestsellers\CollectionFactory')->create()->setPeriod('month');
         $producIds = array();
         foreach ($collection as $product) {
-            $producIds[] = $product->getProductId();
+			if(!$this->getParentId($product->getProductId())){
+				$producIds[] = $product->getProductId();
+			} else {
+				$producIds[] = $this->getParentId($product->getProductId());
+			}
+            
         }
         $collection = $this->_productCollectionFactory->create();
         $collection->setVisibility($this->_catalogProductVisibility->getVisibleInCatalogIds());

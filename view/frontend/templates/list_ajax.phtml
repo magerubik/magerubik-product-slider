@@ -1,0 +1,121 @@
+<?php
+use Magento\Framework\App\Action\Action;
+$_helper = $this->helper('Magento\Catalog\Helper\Output');
+?>
+<div id="productslider<?php echo $block->getTabId(); ?>" class="mr-list-slider">
+	<?php $dataSlider = $block->getItemByType($block->getCatId(),$block->getType()); ?>
+	<?php if(count($dataSlider)>0){ ?>
+		<div id="owl-productslider<?php echo $block->getTabId(); ?>" class="owl-carousel style-default">
+			<?php foreach($dataSlider as $_product){ ?>
+				<div class="item product-item">
+						<div class="abs-img">
+							<a href="<?php echo $_product->getProductUrl() ?>"
+							   title="<?php echo $block->stripTags($block->getImageLabel($_product, 'small_image'), null, true) ?>"
+							   class="product-image" >
+								<?php echo $block->absblock->getImage($_product,'category_page_grid')->toHtml(); ?>
+							</a>							
+							<div data-role="add-to-links" class="abs-left list-icon">
+								<?php if ($this->helper('Magento\Wishlist\Helper\Data')->isAllow()): ?>
+									<a href="#"
+										class="action towishlist"
+										title="<?php echo $block->escapeHtml(__('Add to Wish List')); ?>"
+										aria-label="<?php echo $block->escapeHtml(__('Add to Wish List')); ?>"
+										data-post='<?php /* @escapeNotVerified */ echo $block->absblock->getAddToWishlistParams($_product); ?>'
+										data-action="add-to-wishlist"
+										role="button">
+										<i class="far fa-heart"></i>
+									</a>
+								<?php endif; ?>
+								<?php
+									/**
+									 * @var Magento\Catalog\Helper\Product\Compare $compareHelper
+									 */
+									$compareHelper = $this->helper('Magento\Catalog\Helper\Product\Compare');
+								?>
+								<a href="#"
+									class="action tocompare"
+									title="<?php echo $block->escapeHtml(__('Add to Compare')); ?>"
+									aria-label="<?php echo $block->escapeHtml(__('Add to Compare')); ?>"
+									data-post='<?php /* @escapeNotVerified */ echo $compareHelper->getPostDataParams($_product); ?>'
+									role="button">
+									<i class="far fa-chart-bar"></i>
+								</a>
+							</div>
+						</div>
+						<div class="product-des">
+                            <strong class="product name product-item-name">
+								<a class="product-item-link" href="<?php echo $_product->getProductUrl() ?>"
+									title="<?php echo $block->stripTags($_product->getName(), null, true) ?>">
+									<?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?>
+								</a>
+							</strong>
+                            <?php if($block->tempSetting->showreviews)	echo( $block->absblock->getReviewsSummaryHtml($_product,'short')); ?>
+                            <?php  if($block->tempSetting->showprice) echo $block->getProductPrice($_product); ?>
+							<?php if ( $block->tempSetting->showaddcart )  { ?>
+								<div class="actions-primary">
+									<?php if($_product->isSaleable()): ?>
+										<?php $postParams = $block->absblock->getAddToCartPostParams($_product); ?>
+										<form data-role="tocart-form" action="<?php /* @escapeNotVerified */ echo $postParams['action']; ?>" method="post">
+											<input type="hidden" name="product" value="<?php /* @escapeNotVerified */ echo $postParams['data']['product']; ?>">
+											<input type="hidden" name="<?php /* @escapeNotVerified */ echo Action::PARAM_NAME_URL_ENCODED; ?>" value="<?php /* @escapeNotVerified */ echo $postParams['data'][Action::PARAM_NAME_URL_ENCODED]; ?>">
+											<input type="hidden" name="form_key" value="<?php echo $block->getFormKey(); ?>" />
+											<button type="submit"
+													title="<?php echo $block->absblock->escapeHtml(__('Add to Cart')); ?>"
+													class="action tocart primary">
+												<span><?php /* @escapeNotVerified */ echo __('Add to Cart') ?></span>
+											</button>
+										</form>
+									<?php else: ?>
+										<p class="availability out-of-stock"><span><?php echo __('Out of stock') ?></span></p>
+									<?php endif; ?>
+								</div>
+							<?php } ?>
+                        </div>
+                    </div>
+			<?php } ?>
+		</div>
+		<script type="text/javascript">
+                require(["jquery","mr_owlslider"], function($){
+                    $('#owl-productslider<?php echo $block->getTabId(); ?>').owlCarousel({
+                        autoplay: <?=$block->_configHelper->getAutoplay()?>,
+                        autoplayTimeout: <?=$block->_configHelper->getAutotimeout()?>,
+						stopOnHover: <?=$block->_configHelper->getAutoplay()?>,
+						slideSpeed:  <?=$block->_configHelper->getSliderSpeed()?>,						
+						<?php if($block->_configHelper->getNavigation()==1): ?>
+							nav:true,
+							dots: false,
+						<?php elseif($block->_configHelper->getNavigation()==2): ?>
+							nav:true,
+							dots: true,
+						<?php else: ?>	
+							dots: false,
+						<?php endif; ?>
+						//loop:true,
+						responsiveClass:true,
+						responsive:{
+							0:{
+								margin:10,
+								items:1
+							},
+							375:{
+								margin:10,
+								items:2
+							},
+							600:{
+								margin:10,
+								items:3
+							},
+							992:{
+								margin:10,
+								items:4
+							},
+							1200:{
+								margin:20,
+								items:<?=$block->_configHelper->getSliderItem()?>
+							}
+						}
+                    });
+                });
+        </script>
+	<?php }else { echo __('We can\'t find products matching the selection.'); } ?>
+</div>

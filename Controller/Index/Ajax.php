@@ -38,7 +38,9 @@ class Ajax extends \Magento\Framework\App\Action\Action
 	    $tabId = $this->getRequest()->getParam('tabId');
 		if($this->getRequest()->getParam('vertcal')){
 			$products = $this->_view->getLayout()->createBlock('Magerubik\Productslider\Block\Ajax')->setType($type)->setCatId($catId)->setTabId($tabId)->setTemplate('Magerubik_Productslider::vertcal_ajax.phtml')->toHtml();
-		}else{
+		} else if($this->getRequest()->getParam('list')){
+			$products = $this->_view->getLayout()->createBlock('Magerubik\Productslider\Block\Ajax')->setType($type)->setCatId($catId)->setTabId($tabId)->setTemplate('Magerubik_Productslider::list_ajax.phtml')->toHtml();
+		} else {
 			$products = $this->_view->getLayout()->createBlock('Magerubik\Productslider\Block\Ajax')->setType($type)->setCatId($catId)->setTabId($tabId)->setTemplate('Magerubik_Productslider::ajax.phtml')->toHtml();
 		}		
 		$response = array('html_result'=>$products);
